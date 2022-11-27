@@ -1,0 +1,42 @@
+{
+  "name": "palmreader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./plugin.js",
+  "bin": {
+    "palmreader": "./bin/palmreader"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/**/build/Release/*.node",
+      "node_modules/hsd-ledger/lib/**",
+      "node_modules/hsd/lib/**",
+      "node_modules/blessed/usr/**"
+    ],
+    "outputPath": "build"
+  },
+  "scripts": {
+    "build": "pkg -d -t host .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinheadmz/palmreader.git"
+  },
+  "author": "Matthew Zipkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pinheadmz/palmreader/issues"
+  },
+  "homepage": "https://github.com/pinheadmz/palmreader#readme",
+  "dependencies": {
+    "blessed": "github:pinheadmz/blessed",
+    "blgr": "^0.2.0",
+    "hsd-ledger": "^2.0.1",
+    "hsd": "^4.0.1"
+  },
+  "devDependencies": {
+    "loady": "github:pinheadmz/loady#pkg2",
+    "pkg": "^5.7.0"
+  }
+}

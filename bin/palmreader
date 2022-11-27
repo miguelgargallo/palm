@@ -1,0 +1,123 @@
+#!/usr/bin/env node
+
+/* eslint no-nested-ternary: "off" */
+
+'use strict';
+
+Buffer.poolSize = 0;
+process.title = 'palmreader';
+
+const {version} = require('../package.json');
+const SetupWizard = require('../lib/wizards/setup');
+const {
+  getDefault,
+  getBob
+} = SetupWizard;
+
+const [,, opts,  path] = process.argv;
+
+(async () => {
+  if (opts) {
+    const flags = opts.split('');
+    if (flags.shift() !== '-')
+      usage();
+
+    // Pass all double dash --options directly to hsd
+    if (flags[0] === '-') {
+      return start({});
+    }
+
+    return start({
+      network: flags.includes('r') ? 'regtest' : 'main',
+      prefix: flags.includes('o') ? path
+              : flags.includes('b') ? getBob() : getDefault(),
+      mode: flags.includes('s') ? false : true,
+      indexTX: flags.includes('b') ? true : undefined,
+      indexAddress: flags.includes('b') ? true : undefined
+    });
+  } else {
+    const setupWizard = new SetupWizard();
+    setupWizard.open();
+    const options = await setupWizard.waitForOptions();
+    setupWizard.close();
+    return start(options);
+  }
+})();
+
+async function start(options) {
+  const {
+    network,
+    prefix,
+    mode,
+    indexTX,
+    indexAddress
+  } = options;
+
+  const {FullNode, SPVNode} = require('hsd');
+  const Node = mode ? FullNode : SPVNode;
+
+  const node = new Node({
+    config: true,
+    argv: true,
+    env: true,
+    logFile: true,
+    logConsole: true,
+    logLevel: 'debug',
+    memory: false,
+    workers: true,
+    listen: false,
+    loader: require,
+    prefix,
+    network,
+    indexTX,
+    indexAddress,
+    agent: `PalmReader:${version}`
+  });
+
+  const wallet = require('hsd/lib/wallet/plugin');
+  node.use(wallet);
+
+  const palmreader = require('..');
+  node.use(palmreader);
+
+  node.on('abort', async (err) => {
+    const timeout = setTimeout(() => {
+      console.error('Shutdown is taking a long time. Exiting.');
+      process.exit(3);
+    }, 5000);
+
+    timeout.unref();
+
+    try {
+      console.error('Shutting down...');
+      await node.close();
+      clearTimeout(timeout);
+      console.error(err.stack);
+      process.exit(2);
+    } catch (e) {
+      console.error(`Error occurred during shutdown: ${e.message}`);
+      process.exit(3);
+    }
+  });
+
+  await node.ensure();
+  await node.open();
+  await node.connect();
+  node.startSync();
+}
+
+function usage() {
+  console.log(`
+Usage:
+
+  Launch setup wizard: $ palmreader
+
+  Launch with specific options: $ palmreader -opts [path]
+
+opts:
+ m/r    Main / Regtest
+ d/b/o  Default hsd path / Bob Wallet path / Other [path]
+ s/f    SPV / Full node
+`);
+  process.exit(0);
+}
