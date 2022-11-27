@@ -1,7 +1,6 @@
-You can use this as a template for your projects, just use the template or fork! and delete this file and mantain "License.md"
-
+We are not responsible of this code, we just Theme the code, not develop or own the credits. For that, [go to the Creators](https://github.com/pinheadmz/palmreader)
 - - - - -
-![Lines of Code](https://user-images.githubusercontent.com/5947268/203647317-1c4d925d-9ab3-4c38-afeb-4ad221e6204e.png)
+GHLOC Here
 - - - - -
 
 Copyright &copy; 2022 Miguel Gargallo, Pencil Works LLC, ITAMAESAN ORG, SUPERDATAS, Pylar Team.
@@ -64,7 +63,8 @@ This License governs the use of Pylar Documents and is informed by Pylar Documen
 - “Owner” means Miguel Gargallo, Pencil Works LLC, ITAMAESAN ORG, SUPERDATAS, Pylar Team.
 - “Pylar Documents" means the Software, the Project, the Model, the Dataset or any kind of derivate of the Software, the Project, the Model or the Dataset and Complementary Material provided the Owners.
 - "Dataset" means a collection of data pieces that can be treated by a computer as a single unit for analytic and prediction purposes. This means that the data collected should be made uniform and understandable for a machine that doesn't see data the same way as humans do.
-- "Data" means a collection of information and/or content extracted from the dataset used with the Model, including to train, pretrain, or otherwise evaluate the Model. The Data is not Licensed under this License.
+- 
+"Data" means a collection of information and/or content extracted from the dataset used with the Model, including to train, pretrain, or otherwise evaluate the Model. The Data is not Licensed under this License.
 - "Output" means the results of operating a Model as embodied in informational content resulting therefrom.
 - "Model" means any accompanying machine-learning based assemblies (including checkpoints), consisting of learnt weights, parameters (including optimizer states), corresponding to the Model architecture as embodied in the Complementary Material, that have been trained or tuned, in whole or in part on the Data, using the Complementary Material.
 - "Derivatives of the Software, the Project" means all modifications to the Software, the Project, works based on the Software, the Project, or any other model which is created or initialized by transfer of patterns of the weights, parameters, activations or output of the Software, the Project, to the other model, in order to cause the other model to perform similarly to the Software, the Project, including - but not limited to - distillation methods entailing the use of intermediate data representations or methods based on the generation of synthetic data by the Software, the Project for training the other model.
